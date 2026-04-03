@@ -1,0 +1,21 @@
+{
+  "name": "solanashield-mcp",
+  "version": "1.0.0",
+  "description": "AI-powered smart contract security MCP server for Solana programs",
+  "main": "dist/index.js",
+  "bin": { "solanashield-mcp": "dist/index.js" },
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsc --watch"
+  },
+  "keywords": ["solana", "security", "mcp", "audit", "smart-contract"],
+  "author": "PadraoBitcoin <standardbitcoin.io@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "@types/node": "^25.5.2",
+    "typescript": "^6.0.2",
+    "zod": "^4.3.6"
+  }
+}
