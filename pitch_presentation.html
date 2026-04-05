@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SolanaShield MCP — Colosseum Frontier Pitch</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Segoe UI', system-ui, sans-serif; background: #0f0c29; color: #fff; overflow: hidden; }
+
+.slide {
+  display: none; width: 100vw; height: 100vh;
+  padding: 60px 80px; position: relative;
+  background: linear-gradient(135deg, #0f0c29, #1a1540);
+}
+.slide.active { display: flex; flex-direction: column; justify-content: center; }
+
+/* Slide 1: Title */
+.slide-title { text-align: center; align-items: center; }
+.shield-icon { font-size: 80px; margin-bottom: 20px; }
+.slide-title h1 { font-size: 72px; font-weight: 800; margin-bottom: 10px; }
+.slide-title .subtitle { font-size: 32px; color: #06b6d4; margin-bottom: 40px; }
+.slide-title .track { font-size: 22px; color: #9ca3af; margin-bottom: 60px; }
+.stats-bar { display: flex; justify-content: center; gap: 80px; }
+.stat-item .num { font-size: 48px; font-weight: 800; color: #06b6d4; }
+.stat-item .label { font-size: 18px; color: #9ca3af; }
+
+/* Slide 2: Problem */
+.slide-problem { background: linear-gradient(135deg, #0f0c29, #2a0f1a); }
+.slide-problem h2 { font-size: 52px; color: #ef4444; text-align: center; margin-bottom: 20px; }
+.big-number { font-size: 96px; font-weight: 900; color: #ef4444; text-align: center; }
+.big-subtitle { font-size: 28px; color: #9ca3af; text-align: center; margin-bottom: 40px; }
+.problem-cards { display: flex; gap: 30px; justify-content: center; margin-bottom: 40px; }
+.problem-card {
+  background: rgba(239,68,68,0.1); border: 1px solid #ef4444; border-radius: 16px;
+  padding: 30px; width: 380px;
+}
+.problem-card h3 { color: #ef4444; font-size: 32px; margin-bottom: 10px; }
+.problem-card p { color: #d1d5db; font-size: 18px; }
+.problem-card .detail { color: #9ca3af; font-size: 14px; margin-top: 8px; }
+.highlight-bar { text-align: center; font-size: 26px; font-weight: 700; color: #facc15; margin-top: 30px; }
+
+/* Slide 3: Solution */
+.slide-solution { background: linear-gradient(135deg, #0f0c29, #0a1e2d); }
+.slide-solution h2 { font-size: 48px; color: #22c55e; text-align: center; }
+.slide-solution .sub { font-size: 28px; color: #06b6d4; text-align: center; margin-bottom: 30px; }
+.solution-grid { display: flex; gap: 40px; align-items: flex-start; }
+.code-demo {
+  background: #1e1e30; border: 1px solid #7c3aed; border-radius: 12px;
+  padding: 20px; flex: 1; font-family: 'Courier New', monospace; font-size: 15px;
+}
+.code-demo .dots { margin-bottom: 12px; }
+.code-demo .dots span { display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 6px; }
+.code-demo .red { background: #ef4444; } .code-demo .yellow { background: #facc15; } .code-demo .green { background: #22c55e; }
+.code-demo pre { color: #22c55e; line-height: 1.6; white-space: pre-wrap; }
+.x402-flow { flex: 0 0 400px; }
+.x402-flow h3 { color: #06b6d4; font-size: 28px; margin-bottom: 20px; }
+.flow-step { margin-bottom: 20px; }
+.flow-step .step-num { color: #7c3aed; font-size: 24px; font-weight: 800; display: inline; }
+.flow-step .step-title { font-size: 22px; font-weight: 700; margin-left: 8px; }
+.flow-step .step-desc { color: #9ca3af; font-size: 16px; margin-left: 36px; }
+.green-box {
+  background: rgba(34,197,94,0.1); border: 1px solid #22c55e; border-radius: 12px;
+  padding: 20px; text-align: center; font-size: 24px; font-weight: 700; color: #22c55e;
+  margin-top: 30px;
+}
+
+/* Slide 4: Architecture */
+.layers { display: flex; flex-direction: column; align-items: center; gap: 8px; margin-bottom: 30px; }
+.layer-box {
+  width: 700px; padding: 18px; text-align: center; border-radius: 10px;
+  font-size: 22px; font-weight: 700; background: rgba(30,25,55,0.8);
+}
+.layer-box.purple { border: 2px solid #7c3aed; color: #7c3aed; }
+.layer-box.cyan { border: 2px solid #06b6d4; color: #06b6d4; }
+.layer-box.green { border: 2px solid #22c55e; color: #22c55e; }
+.layer-box.yellow { border: 2px solid #facc15; color: #facc15; }
+.layer-arrow { color: #9ca3af; font-size: 20px; }
+.market-side { position: absolute; right: 80px; top: 140px; }
+.market-side h3 { color: #06b6d4; font-size: 32px; margin-bottom: 15px; }
+.market-stat { margin-bottom: 12px; }
+.market-stat .val { font-size: 28px; font-weight: 800; }
+.market-stat .lbl { color: #9ca3af; font-size: 16px; margin-left: 10px; }
+.comp-table { margin-top: 20px; width: 100%; }
+.comp-table td { padding: 8px 20px; font-size: 18px; }
+.comp-red { color: #ef4444; } .comp-green { color: #22c55e; }
+
+/* Slide 5: Traction */
+.slide-traction { background: linear-gradient(135deg, #0f0c29, #0f2318); }
+.slide-traction h2 { font-size: 48px; color: #22c55e; text-align: center; margin-bottom: 30px; }
+.traction-grid { display: flex; gap: 60px; }
+.traction-list { flex: 1; }
+.traction-item { margin-bottom: 20px; }
+.traction-item .dot { display: inline-block; width: 14px; height: 14px; border-radius: 50%; margin-right: 12px; vertical-align: middle; }
+.traction-item .title { font-size: 26px; font-weight: 700; }
+.traction-item .desc { color: #9ca3af; font-size: 16px; margin-left: 26px; }
+.roadmap { flex: 0 0 400px; }
+.roadmap h3 { color: #06b6d4; font-size: 28px; margin-bottom: 15px; }
+.phase { padding: 15px 20px; border-radius: 8px; margin-bottom: 12px; font-size: 20px; font-weight: 700; }
+.phase.p1 { background: rgba(34,197,94,0.15); border: 1px solid #22c55e; color: #22c55e; }
+.phase.p2 { background: rgba(250,204,21,0.15); border: 1px solid #facc15; color: #facc15; }
+.phase.p3 { background: rgba(124,58,237,0.15); border: 1px solid #7c3aed; color: #7c3aed; }
+.margin-bar {
+  background: rgba(34,197,94,0.15); border: 1px solid #22c55e; border-radius: 12px;
+  padding: 20px; text-align: center; font-size: 24px; font-weight: 700; color: #22c55e;
+  margin-top: 30px;
+}
+
+/* Slide 6: Closing */
+.slide-closing { text-align: center; align-items: center; background: linear-gradient(135deg, #140a32, #0a283c); }
+.closing-quote { font-size: 40px; font-weight: 700; margin: 30px 0; }
+.closing-quote .cyan { color: #06b6d4; }
+.install-box {
+  background: #1e1e30; border: 1px solid #7c3aed; border-radius: 12px;
+  padding: 20px 40px; font-family: monospace; font-size: 28px; color: #22c55e;
+  margin: 30px 0; display: inline-block;
+}
+.tagline { font-size: 28px; color: #9ca3af; margin: 20px 0; }
+.links { font-size: 18px; color: #7c3aed; margin: 10px 0; }
+.contact { font-size: 18px; color: #9ca3af; }
+
+/* Navigation */
+.nav { position: fixed; bottom: 20px; right: 20px; z-index: 100; display: flex; gap: 10px; }
+.nav button {
+  background: rgba(124,58,237,0.3); border: 1px solid #7c3aed; color: #fff;
+  padding: 10px 20px; border-radius: 8px; cursor: pointer; font-size: 16px;
+}
+.nav button:hover { background: #7c3aed; }
+.slide-counter { position: fixed; bottom: 25px; left: 20px; color: #9ca3af; font-size: 14px; }
+.timer { position: fixed; top: 20px; right: 20px; color: #9ca3af; font-size: 14px; }
+
+/* Narration notes */
+.narration {
+  position: fixed; bottom: 70px; left: 50%; transform: translateX(-50%);
+  background: rgba(0,0,0,0.8); border: 1px solid #7c3aed; border-radius: 8px;
+  padding: 15px 25px; max-width: 800px; font-size: 16px; color: #d1d5db;
+  display: none;
+}
+.show-notes .narration { display: block; }
+</style>
+</head>
+<body>
+
+<!-- Slide 1: Title -->
+<div class="slide slide-title active" data-time="15">
+  <div class="shield-icon">&#x1F6E1;</div>
+  <h1>SolanaShield MCP</h1>
+  <p class="subtitle">Pay-Per-Audit Security for AI Agents</p>
+  <p class="track">Colosseum Frontier 2026 | Track: Infrastructure</p>
+  <div class="stats-bar">
+    <div class="stat-item"><div class="num">12</div><div class="label">MCP Tools</div></div>
+    <div class="stat-item"><div class="num">40</div><div class="label">Vuln Patterns</div></div>
+    <div class="stat-item"><div class="num">$0.01</div><div class="label">Per Audit</div></div>
+    <div class="stat-item"><div class="num">x402</div><div class="label">Payments</div></div>
+  </div>
+  <div class="narration">Solana developers have lost over $500 million to preventable vulnerabilities. What if every AI agent could buy a security audit for less than a dollar?</div>
+</div>
+
+<!-- Slide 2: Problem -->
+<div class="slide slide-problem" data-time="30">
+  <h2>The Problem</h2>
+  <div class="big-number">$500M+</div>
+  <div class="big-subtitle">lost to preventable Solana vulnerabilities</div>
+  <div class="problem-cards">
+    <div class="problem-card">
+      <h3>$50K-$200K</h3>
+      <p>Manual audits cost too much</p>
+      <p class="detail">Small teams launch unaudited</p>
+    </div>
+    <div class="problem-card">
+      <h3>EVM Only</h3>
+      <p>Existing tools miss Solana</p>
+      <p class="detail">Wormhole $320M, Mango $114M, Cashio $52M</p>
+    </div>
+    <div class="problem-card">
+      <h3>No AI Access</h3>
+      <p>Agents can't buy security</p>
+      <p class="detail">Human-in-the-loop: emails, NDAs, invoices</p>
+    </div>
+  </div>
+  <div class="highlight-bar">95% of Solana programs launch WITHOUT a security audit</div>
+  <div class="narration">This program has a missing signer check -- a critical vulnerability. Manual audits cost $50,000 and take weeks. Existing scanners are built for Ethereum. And AI agents? They cannot even request an audit.</div>
+</div>
+
+<!-- Slide 3: Solution -->
+<div class="slide slide-solution" data-time="45">
+  <h2>The Solution</h2>
+  <p class="sub">SolanaShield MCP + x402 Micropayments</p>
+  <div class="solution-grid">
+    <div class="code-demo">
+      <div class="dots"><span class="red"></span><span class="yellow"></span><span class="green"></span></div>
+      <pre>$ claude
+> Audit this Solana program for security issues
+
+[SolanaShield] Scanning... 40 patterns checked in 1.8s
+
+CRITICAL: SOL-C-002 Missing Signer Check
+  Line 45: pub fn withdraw(ctx: Context&lt;Withdraw&gt;)
+  Impact: Any user can drain funds
+  Fix: Add #[account(signer)] constraint
+
+HIGH: SOL-H-001 Missing Owner Validation
+  Line 23: No owner check on token account
+
+Found: 2 Critical, 1 High, 3 Medium</pre>
+    </div>
+    <div class="x402-flow">
+      <h3>x402 Payment Flow</h3>
+      <div class="flow-step"><span class="step-num">1.</span><span class="step-title">curl /audit</span><div class="step-desc">Send code to API</div></div>
+      <div class="flow-step"><span class="step-num">2.</span><span class="step-title">402 Payment Required</span><div class="step-desc">Server returns price</div></div>
+      <div class="flow-step"><span class="step-num">3.</span><span class="step-title">Attach USDC header</span><div class="step-desc">Agent pays $0.01-$5</div></div>
+      <div class="flow-step"><span class="step-num">4.</span><span class="step-title">Audit results</span><div class="step-desc">Findings delivered instantly</div></div>
+    </div>
+  </div>
+  <div class="green-box">No accounts. No API keys. One payment, one audit.</div>
+  <div class="narration">Open Claude Code. Type: "Audit this Solana program." SolanaShield returns findings in 2 seconds. Then show x402: curl the API, get 402 Payment Required, attach USDC header, receive results. Any AI agent, any HTTP client.</div>
+</div>
+
+<!-- Slide 4: Architecture -->
+<div class="slide" data-time="30">
+  <h2 style="text-align:center;font-size:48px;margin-bottom:30px;">Architecture & Market</h2>
+  <div class="layers">
+    <div class="layer-box purple">AI Agent / Claude / Cursor</div>
+    <div class="layer-arrow">|</div>
+    <div class="layer-box cyan">MCP Protocol</div>
+    <div class="layer-arrow">|</div>
+    <div class="layer-box green">SolanaShield Server</div>
+    <div class="layer-arrow">|</div>
+    <div class="layer-box yellow">40 Patterns | 12 Tools | Rex Engine</div>
+    <div class="layer-arrow">|</div>
+    <div class="layer-box purple">x402 Payment Layer (USDC on Solana)</div>
+  </div>
+  <div class="market-side">
+    <h3>Market</h3>
+    <div class="market-stat"><span class="val">$10B+</span><span class="lbl">Solana TVL</span></div>
+    <div class="market-stat"><span class="val">95%</span><span class="lbl">Programs unaudited</span></div>
+    <div class="market-stat"><span class="val">100M+</span><span class="lbl">AI code sessions/mo</span></div>
+    <div class="market-stat"><span class="val">$0.01-$5</span><span class="lbl">Per audit</span></div>
+    <div class="market-stat"><span class="val">99%</span><span class="lbl">Gross margin</span></div>
+  </div>
+  <table class="comp-table" style="margin-top:10px;">
+    <tr><td class="comp-red"><b>Trail of Bits</b></td><td class="comp-red">$50K-$200K</td><td class="comp-red">4-8 weeks</td><td class="comp-red">No MCP</td><td class="comp-red">No x402</td></tr>
+    <tr><td class="comp-green"><b>SolanaShield</b></td><td class="comp-green">$0.01-$5</td><td class="comp-green">2 seconds</td><td class="comp-green">MCP Native</td><td class="comp-green">x402 Pay</td></tr>
+  </table>
+  <div class="narration">40 Solana-specific vulnerability patterns. 12 MCP tools. x402 micropayments on Solana. $0.01 for a risk score, $5.00 for a deep AI-powered audit. The Solana ecosystem has $10 billion in TVL and fewer than 5% of programs are audited.</div>
+</div>
+
+<!-- Slide 5: Traction -->
+<div class="slide slide-traction" data-time="30">
+  <h2>Traction & Revenue</h2>
+  <div class="traction-grid">
+    <div class="traction-list">
+      <div class="traction-item"><span class="dot" style="background:#22c55e"></span><span class="title" style="color:#22c55e">npm published</span><div class="desc">solanashield-mcp v2.0.0 — install globally</div></div>
+      <div class="traction-item"><span class="dot" style="background:#06b6d4"></span><span class="title" style="color:#06b6d4">12 MCP Tools</span><div class="desc">Full audit, account checks, CPI, PDA, arithmetic</div></div>
+      <div class="traction-item"><span class="dot" style="background:#06b6d4"></span><span class="title" style="color:#06b6d4">40 Patterns</span><div class="desc">Solana-specific: Anchor, SPL, native, rent, PDA</div></div>
+      <div class="traction-item"><span class="dot" style="background:#facc15"></span><span class="title" style="color:#facc15">x402 Integrated</span><div class="desc">$0.01 risk-score to $5.00 deep-audit</div></div>
+      <div class="traction-item"><span class="dot" style="background:#7c3aed"></span><span class="title" style="color:#7c3aed">Rex Engine v1.1</span><div class="desc">116 signatures, 4-pass consensus audit</div></div>
+      <div class="traction-item"><span class="dot" style="background:#fff"></span><span class="title">22+ Products Shipped</span><div class="desc">3 npm packages, 50+ repos, MCP expertise</div></div>
+    </div>
+    <div class="roadmap">
+      <h3>Roadmap</h3>
+      <div class="phase p1">Phase 1: MCP + x402 (NOW)</div>
+      <div class="phase p2">Phase 2: Enterprise patterns</div>
+      <div class="phase p3">Phase 3: Audit marketplace</div>
+      <div style="background:rgba(124,58,237,0.1);border:1px solid #7c3aed;border-radius:12px;padding:20px;margin-top:20px;">
+        <h4 style="color:#7c3aed;margin-bottom:10px;">Security Experience</h4>
+        <p style="color:#9ca3af;font-size:15px;">50+ findings submitted<br>Code4rena, Immunefi, Guardian<br>Rex Engine: consensus AI audit<br>Solomon Edge MCP: real AI stack</p>
+      </div>
+    </div>
+  </div>
+  <div class="margin-bar">99% Gross Margins | Pay-Per-Use | Zero CAC via MCP Distribution</div>
+  <div class="narration">Published on npm. Works today with Claude Code and Cursor. x402 enables pay-per-audit with 99% gross margins. Roadmap: enterprise custom patterns, audit marketplace, CI/CD pipeline integration.</div>
+</div>
+
+<!-- Slide 6: Closing -->
+<div class="slide slide-closing" data-time="30">
+  <div class="shield-icon">&#x1F6E1;</div>
+  <div class="closing-quote">"Security that lives where you code,<br><span class="cyan">paid the way agents pay."</span></div>
+  <div class="install-box">$ npm install -g solanashield-mcp</div>
+  <div class="tagline">Built for Solana. Built for AI. Built at Colosseum Frontier.</div>
+  <div class="links">npmjs.com/package/solanashield-mcp | github.com/ElromEvedElElyon</div>
+  <div class="contact">PadraoBitcoin | standardbitcoin.io@gmail.com</div>
+  <div class="narration">SolanaShield MCP. Security that lives where you code, paid the way agents pay. npm install -g solanashield-mcp. Built for Solana. Built for AI. Built at Colosseum Frontier.</div>
+</div>
+
+<div class="nav">
+  <button onclick="toggleNotes()">Notes</button>
+  <button onclick="prevSlide()">Prev</button>
+  <button onclick="nextSlide()">Next</button>
+</div>
+<div class="slide-counter" id="counter">1 / 6</div>
+<div class="timer" id="timer">0:00 / 3:00</div>
+
+<script>
+let current = 0;
+const slides = document.querySelectorAll('.slide');
+let startTime = null;
+
+function showSlide(n) {
+  slides.forEach(s => s.classList.remove('active'));
+  slides[n].classList.add('active');
+  document.getElementById('counter').textContent = `${n+1} / ${slides.length}`;
+  if (!startTime) startTime = Date.now();
+}
+function nextSlide() { if (current < slides.length-1) { current++; showSlide(current); } }
+function prevSlide() { if (current > 0) { current--; showSlide(current); } }
+function toggleNotes() { document.body.classList.toggle('show-notes'); }
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === ' ') nextSlide();
+  if (e.key === 'ArrowLeft') prevSlide();
+  if (e.key === 'n') toggleNotes();
+  if (e.key === 'f') document.documentElement.requestFullscreen();
+});
+
+setInterval(() => {
+  if (startTime) {
+    const elapsed = Math.floor((Date.now() - startTime) / 1000);
+    const m = Math.floor(elapsed / 60);
+    const s = elapsed % 60;
+    document.getElementById('timer').textContent = `${m}:${s.toString().padStart(2,'0')} / 3:00`;
+    if (elapsed >= 180) document.getElementById('timer').style.color = '#ef4444';
+  }
+}, 1000);
+</script>
+</body>
+</html>
