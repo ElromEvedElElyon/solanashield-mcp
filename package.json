@@ -1,18 +1,40 @@
 {
   "name": "solanashield-mcp",
-  "version": "1.0.0",
-  "description": "AI-powered smart contract security MCP server for Solana programs — 12 tools, 40 vulnerability patterns",
+  "version": "2.0.0",
+  "description": "AI-powered smart contract security MCP server for Solana — x402 pay-per-audit, 12 tools, 40 vulnerability patterns",
   "type": "module",
   "main": "dist/index.js",
-  "bin": { "solanashield-mcp": "dist/index.js" },
-  "files": ["dist", "README.md", "LICENSE"],
+  "bin": {
+    "solanashield-mcp": "dist/index.js",
+    "solanashield-x402": "dist/x402-server.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js",
+    "start:x402": "node dist/x402-server.js",
     "dev": "tsc --watch",
     "prepublishOnly": "npm run build"
   },
-  "keywords": ["solana", "security", "mcp", "audit", "smart-contract", "anchor", "vulnerability", "ai", "model-context-protocol"],
+  "keywords": [
+    "solana",
+    "security",
+    "mcp",
+    "audit",
+    "smart-contract",
+    "anchor",
+    "vulnerability",
+    "ai",
+    "model-context-protocol",
+    "x402",
+    "micropayments",
+    "usdc",
+    "pay-per-audit"
+  ],
   "author": "PadraoBitcoin <standardbitcoin.io@gmail.com>",
   "license": "MIT",
   "repository": {
@@ -21,6 +43,8 @@
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.29.0",
+    "@x402/core": "^2.9.0",
+    "@x402/mcp": "^2.9.0",
     "zod": "^4.3.6"
   },
   "devDependencies": {
