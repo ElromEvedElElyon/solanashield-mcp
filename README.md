@@ -104,6 +104,30 @@ src/
     static-analyzer.ts  # Pattern matching engine + report formatting
 ```
 
+## Colosseum Frontier Hackathon
+
+SolanaShield is competing in the [Solana Frontier Hackathon](https://colosseum.com/frontier) (Apr 6 — May 11, 2026):
+
+- **$30K** Grand Champion + **$250K** pre-seed funding
+- **Category**: Security / Developer Tools
+- **Status**: Registered and building
+
+### Why SolanaShield?
+
+Every Solana program deployed without a security audit is a potential exploit waiting to happen. SolanaShield makes security accessible to every developer by integrating directly into their AI workflow via MCP. No expensive audit firms, no waiting weeks — instant security analysis.
+
+### Roadmap
+
+- [x] 40 vulnerability patterns (8 critical, 12 high)
+- [x] 12 MCP tools
+- [x] Published on npm (`solanashield-mcp`)
+- [x] x402 pay-per-audit server
+- [ ] Real-time monitoring (watch deployed programs)
+- [ ] Anchor IDL parsing
+- [ ] Multi-program analysis (CPI chains)
+- [ ] VS Code extension
+- [ ] CI/CD GitHub Action
+
 ## License
 
 MIT
