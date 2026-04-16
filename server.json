@@ -1,0 +1,20 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.elromevedelelyon/solanashield-mcp",
+  "description": "AI-powered smart contract security MCP server for Solana. 12 tools covering access control, CPI safety, PDA safety, arithmetic overflow, token safety, oracle staleness, reentrancy, DoS, and more. 40 vulnerability patterns (8 Critical / 12 High / 12 Medium / 8 Low). Supports x402 pay-per-audit in USDC on Base.",
+  "repository": {
+    "url": "https://github.com/ElromEvedElElyon/solanashield-mcp",
+    "source": "github"
+  },
+  "version": "2.0.0",
+  "packages": [
+    {
+      "registryType": "npm",
+      "identifier": "solanashield-mcp",
+      "version": "2.0.0",
+      "transport": {
+        "type": "stdio"
+      }
+    }
+  ]
+}

@@ -1,6 +1,7 @@
 {
   "name": "solanashield-mcp",
   "version": "2.0.0",
+  "mcpName": "io.github.elromevedelelyon/solanashield-mcp",
   "description": "AI-powered smart contract security MCP server for Solana — x402 pay-per-audit, 12 tools, 40 vulnerability patterns",
   "type": "module",
   "main": "dist/index.js",
